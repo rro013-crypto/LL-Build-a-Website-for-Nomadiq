@@ -1,15 +1,215 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Nomadiq Travel Destinations</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Help, easy — charity: water (Starter)</title>
+  <meta name="description" content="Landing page starter using your Canva brand: Proxima Nova + #77A8BB, #FFC907, #CBCCD1. HTML & CSS only." />
+
+  <!-- Preload the family image so it is visible immediately when the page loads -->
+  <link rel="preload" as="image" href="assets/family.jpg">
+
+  <style>
+    /* ---------------- Brand Tokens ---------------- */
+    :root{
+      /* Make site 'blue' token a dark color so text that used the teal becomes dark */
+      --blue:   #1a1a1a;
+      --yellow: #FFC907;
+      --gray:   #CBCCD1;
+  --white:  #FFFFFF;
+  --dark:   #1a1a1a;
+    }
+
+    /* ---------------- Base ---------------- */
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Proxima Nova', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;background:var(--white);color:var(--blue);line-height:1.4}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(100% - 2rem, 1100px);margin-inline:auto;padding-inline:1rem}
+
+    /* Skip link for keyboard users */
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:1rem;top:1rem;padding:.4rem .6rem;background:var(--blue);color:var(--white);border-radius:4px;z-index:1000}
+
+    /* ---------------- Header ---------------- */
+    header{background:var(--white);border-bottom:2px solid var(--gray)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+    /* Header logos: keep aspect ratio, use height to size so wide logos aren't squashed */
+  .brand img{height:56px;width:auto;display:block}
+    .brand-logo{display:inline-block}
+  .brand-logo img{height:40px;width:auto;display:block}
+  /* Header signup button (replaces right logo) */
+  .signup{display:inline-block;padding:.45rem .9rem;border-radius:999px;border:2px solid var(--yellow);color:var(--blue);background:transparent;font-weight:700;text-decoration:none}
+  .signup:hover{background:var(--yellow);color:var(--white)}
+  .pill{display:inline-block;background:transparent;color:var(--white);font-weight:700;padding:.55rem 1.1rem;border-radius:999px;border:2px solid var(--yellow)}
+  .pill--outline{background:transparent;border:2px solid var(--yellow);color:var(--white)}
+  /* Join link inside header pill should appear in brand blue */
+  .pill .join{color:var(--blue);margin-left:.5rem;font-weight:700}
+
+    /* ---------------- Hero ---------------- */
+  /* Hero: place background image and keep text away from faces by positioning text near the top-center
+     and adding a subtle translucent panel behind the text. Can't detect faces automatically, so this
+     reduces the chance text will overlap faces in most compositions. */
+  /* Lift faces slightly by shifting the background image up (15% from the top),
+     soften the overlay so faces remain visible, and move the text a little lower
+     to avoid overlapping the faces. */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background-image:url('img/happy1.jpg');background-position:center 5%;background-size:cover;background-repeat:no-repeat;transform:translateZ(0);z-index:0}
+  /* Full-size anchor that sits on top of the background but behind the text */
+  .hero-link{position:absolute;inset:0;z-index:0;display:block}
+  /* Ensure hero-inner (text) sits above the hero-link */
+  .hero-inner{position:absolute;top:2%;left:50%;transform:translate(-50%,0);z-index:1;max-width:640px;text-align:center;padding:1.5rem 1.5rem;margin:0}
+  /* Visible focus state for keyboard users when tabbing to the hero link */
+  .hero-link:focus{outline:3px solid rgba(255,201,7,0.9);outline-offset:-3px}
+  /* Position the hero text near the top so it doesn't overlap faces */
+  .eyebrow{color:var(--white);text-transform:uppercase;letter-spacing:.08em;font-size:.85rem}
+  /* Make eyebrow text dark on top of the hero image */
+  .hero .eyebrow{color:var(--blue)}
+    h1{margin:.4rem 0 0;color:var(--yellow);font-size:clamp(2rem,5vw,3.2rem);line-height:1.1}
+    .subhead{margin:.35rem 0 0;color:var(--white)}
+    .hero-ctas{margin-top:1rem;display:inline-flex;gap:.6rem}
+
+    /* ---------------- Why / Features (flex fallback for beginners) ---------------- */
+  section{padding:4rem 0}
+    .section-title{text-align:center;margin-bottom:1.5rem}
+    .section-title h2{margin:.2rem 0 0;color:var(--blue)}
+    /* Use simple flex with wrapping instead of CSS Grid for beginners */
+    .features{display:flex;gap:1rem;flex-wrap:wrap}
+  .card{flex:1 1 300px;border:1px solid rgba(0,0,0,0.06);border-radius:14px;overflow:hidden;background:var(--white);min-width:220px}
+    .card img{width:100%;height:160px;object-fit:cover}
+    .card-body{padding:1rem}
+    .card h3{margin:.25rem 0;color:var(--blue)}
+    .card p{margin:.35rem 0;color:var(--blue)}
+
+    /* ---------------- Impact Strip ---------------- */
+  .strip{background:var(--yellow);color:var(--blue);padding:1.25rem 0}
+    .stats{display:flex;gap:1rem;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .stat{flex:1 1 140px;padding:1rem 0;text-align:center}
+    .stat strong{display:block;font-size:clamp(1.2rem,3.5vw,1.8rem)}
+
+    /* ---------------- Footer ---------------- */
+    footer{background:var(--gray);color:var(--blue);padding:1.5rem 0;text-align:center}
+
+    /* ---------------- Responsive tweaks ---------------- */
+    @media (max-width: 880px){
+    .hero{padding:3rem 1.25rem}
+  /* On smaller screens keep centered layout and return hero-inner to normal flow */
+  .hero{justify-content:center;align-items:center}
+  .hero-inner{position:relative;max-width:640px;text-align:center;margin:1rem 0;transform:none;left:auto;top:auto}
+    }
+    @media (max-width: 620px){.card img{height:130px}}
+  </style>
 </head>
-
 <body>
-  <h1>Nomadiq Travel Destinations</h1>
-</body>
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- Header -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+  <a class="brand" href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer"><img src="img/logo.jpeg" alt="charity: water logo"></a>
+  <!-- Replaced right-aligned logo with a Sign Up button -->
+  <a class="signup" href="https://www.charitywater.org/account/register" target="_blank" rel="noopener noreferrer">Sign Up</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" role="img" aria-label="Smiling family at a new water point">
+      <!-- Full-bleed link over the hero background; placed behind the text content -->
+      <a class="hero-link" href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit charity: water homepage"></a>
+      <div class="container hero-inner">
+        <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">
+          <div class="eyebrow">Bringing water to places others can't reach</div>
+          <h1>Help, easy with charity: water.</h1>
+          <p class="subhead">100% of your contribution directly helps families access clean drinking water.</p>
+        </a>
+        <div class="hero-ctas">
+          <a class="pill" href="https://www.charitywater.org/donate" target="_blank" rel="noopener noreferrer">Donate Now</a>
+          <a class="pill pill--outline" href="https://www.charitywater.org/how-we-work" target="_blank" rel="noopener noreferrer">How It Works</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why / Features -->
+    <section id="why">
+      <div class="container">
+        <div class="section-title">
+          <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">
+            <div class="eyebrow" style="color:var(--blue)">Why Give</div>
+            <h2>Simple. Transparent. Real.</h2>
+          </a>
+        </div>
+
+        <!-- features use flexbox so students learn a simpler layout -->
+        <div class="features">
+          <article class="card">
+            <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener noreferrer">
+              <img src="img/well.jpg" alt="Project team at a well site (placeholder)">
+            </a>
+            <div class="card-body">
+              <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">
+                <h3>Help, Easy</h3>
+                <p>Fast, clear donating experience designed for the socially conscious giver.</p>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <a href="https://www.charitywater.org/our-approach/100-percent-model" target="_blank" rel="noopener noreferrer">
+              <img src="img/water.jpg" alt="Clean water flowing (placeholder)">
+            </a>
+            <div class="card-body">
+              <a href="https://www.charitywater.org/our-approach/100-percent-model" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">
+                <h3>100% Model</h3>
+                <p>Your gift goes straight to water projects—see where it’s making a difference.</p>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <!-- Updated to use the provided smiling family image from the img/ folder; image links to Our Work -->
+            <a href="https://www.charitywater.org/our-work" target="_blank" rel="noopener noreferrer">
+              <img src="img/charity_water_Tanzania_TaraShupePhotography_0008.jpg" alt="Smiling family with water jerrycans">
+            </a>
+            <div class="card-body">
+              <a href="https://www.charitywater.org/our-work" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">
+                <h3>Happy Families</h3>
+                <p>Stories that show exactly how access to clean water changes daily life.</p>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact strip (sample numbers → replace later) -->
+    <section class="strip">
+      <div class="container stats">
+          <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;width:100%">
+          <div class="stat"><strong>37,286</strong><span>People served every month</span></div>
+          <div class="stat"><strong>17</strong><span>Countries directly impacted</span></div>
+          <div class="stat"><strong>100%</strong><span>Of your gift to projects</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+  <small><a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">© <span id="year">2025</span> charity: water</a></small>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year automatically (small JS example for students)
+    (function () {
+      var y = new Date().getFullYear();
+      var el = document.getElementById('year');
+      if (el) el.textContent = y;
+    })();
+  </script>
+</body>
 </html>
